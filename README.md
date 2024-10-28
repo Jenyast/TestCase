@@ -8,13 +8,13 @@ terraform init
 terraform apply -target=helm_release.istio_base  -target=helm_release.istiod -target=helm_release.istio_ingress -auto-approve
 ```
 
-Если helm_release.istio_ingress долго создается (около 2х минут), то рекомендуется выполнить команду в соседнем терминале:
+Если `helm_release.istio_ingress` долго создается (около 2х минут), то рекомендуется выполнить команду в соседнем терминале:
 ```
 watch kubectl get all -n istio-system
 ```
-И посмотреть статус пода istio-ingressgateway, в моем случае в статусе были ошибки ErrImagePull и ImagePullBackOff
+И посмотреть статус пода `istio-ingressgateway`, в моем случае в статусе были ошибки `ErrImagePull` и `ImagePullBackOff`
 
-Для решения этой ситуации, можно удалить под по имени (смотрим в выводе предыдущей команды), после чего образ спуллится корректно, также выполним minikube tunnel для инициализации LoadBalancer, пример команды ниже, имя пода подставить свое.
+Для решения этой ситуации, можно удалить под по имени (смотрим в выводе предыдущей команды), после чего образ спуллится корректно, также выполним `minikube tunnel` для инициализации LoadBalancer, пример команды ниже, имя пода подставить свое.
 ```
 kubectl delete po istio-ingressgateway-869fb76dc-kr8b9 -n istio-system && minikube tunnel
 ```
@@ -22,7 +22,7 @@ kubectl delete po istio-ingressgateway-869fb76dc-kr8b9 -n istio-system && miniku
 ```
 kubectl delete po $(kubectl get po -n istio-system | grep istio-ingressgateway | awk '{print $1}') -n istio-system
 ```
-Если все поды в статусе running, а helm_release.istio_ingress все ещё создается, то выполняем только:
+Если все поды в статусе running, а `helm_release.istio_ingress` все ещё создается, то выполняем только:
 ```
 minikube tunnel
 ```
