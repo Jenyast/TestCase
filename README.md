@@ -27,6 +27,7 @@ kubectl delete po $(kubectl get po -n istio-system | grep istio-ingressgateway |
 minikube tunnel
 ```
 После этого создание ресурса helm_release.istio_ingress должно завершиться.
+
 3. Создаем namespace, deployment и service для httpd и создаем сущности istio: gateway и virtual_service с помощью команды ниже:
 ```
 terraform apply -target=kubernetes_namespace.httpd  -target=kubernetes_manifest.httpd_deployment -target=kubernetes_manifest.httpd_service -target=kubernetes_manifest.gateway -target=kubernetes_manifest.virtual_service -auto-approve
